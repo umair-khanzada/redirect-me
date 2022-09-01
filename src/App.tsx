@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
+import { ThemeProvider } from "styled-components";
 
+import { initialState, reducer } from 'src/store';
+import {Header, Tabs, TabContent, List, Form} from 'src/components';
+import { theme } from 'src/theme';
+
+const tabs = ['YOUR LIST', 'ADD / UPDATE',];
 function App() {
+  // @ts-ignore
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { items, activeTab } = state;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="app-container">
+        <Header text="redirect-me" >
+          <Tabs tabs={tabs} activeIndex={activeTab} dispatch={dispatch} />
+        </Header>
+        <TabContent tab={0} activeTab={activeTab}>
+          <List items={items} dispatch={dispatch}/>
+        </TabContent>
+        <TabContent tab={1} activeTab={activeTab}>
+          {/*This props should be rename */}
+          <Form dispatch={dispatch} data={state.selected}/>
+        </TabContent>
+      </div>
+    </ThemeProvider>
   );
 }
 
