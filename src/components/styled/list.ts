@@ -25,6 +25,7 @@ export const list = styled.ul`
     img {
       border: 1px solid ${props => props.theme.colors.primary};
       border-radius: 8px;
+      width: 32px;
     }
     .text-content {
       margin-left: 10px;

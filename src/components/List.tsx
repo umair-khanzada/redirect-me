@@ -21,11 +21,17 @@ function List({className = '', dispatch, items}: Props) {
     dispatch(selectItem(i));
     dispatch(changeTab(1));
   };
+
+  function handleImageError(this: HTMLImageElement) {
+    this.onerror = null;
+    this.src = 'logo192.png';
+  }
+
   return (
     <S.list className={className}>
       {items.map((item, i) => (
         <li key={i}>
-          <img src={`${item.url}favicon.ico`} alt="#"/>
+          <img src={`${item.url}favicon.ico`} onError={handleImageError} alt="list-item-logo"/>
           <div className="text-content">
             <div className="title" title={item.title}>
               <a href={item.url} target="_blank">{item.title}</a>
@@ -34,8 +40,8 @@ function List({className = '', dispatch, items}: Props) {
           </div>
           <div className="actions">
             <div className="schedule-time light-font">Timer 8:00</div>
-            <Button title="Edit" className="info" onClick={() => selectAndChangeTab(i)}>✏️</Button>
-            <Button title="Delete" className="error" onClick={() => dispatch(deleteItem(i))}>✘</Button>
+            <Button title="Edit" className="info" onClick={() => selectAndChangeTab(i)}>Edit️</Button>
+            <Button title="Delete" className="error" onClick={() => dispatch(deleteItem(i))}>Delete</Button>
           </div>
         </li>
       ))}
